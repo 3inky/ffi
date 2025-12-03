@@ -7,7 +7,7 @@
 #pragma comment(lib, "Shlwapi.lib")
 #else
 #define _XOPEN_SOURCE 700
-#include <sys/types.h> // HATA DÜZELTME: Bu satır u_int, u_char vb. tanımlarını sağlar
+#include <sys/types.h>
 #include <pthread.h>
 #include <dirent.h>
 #include <sys/stat.h>
