@@ -1,4 +1,5 @@
 <img width="851" height="106" alt="screenshot of ffi" src="https://github.com/user-attachments/assets/42c94317-4d06-4254-80cc-4e53fd51fe41" />
+
 # ffi
 
 **ffi** is a high-performance, cross-platform file search utility written in C.  
