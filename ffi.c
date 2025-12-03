@@ -7,6 +7,7 @@
 #pragma comment(lib, "Shlwapi.lib")
 #else
 #define _XOPEN_SOURCE 700
+#include <sys/types.h> // HATA DÜZELTME: Bu satır u_int, u_char vb. tanımlarını sağlar
 #include <pthread.h>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -23,7 +24,6 @@
 #include <ctype.h>
 
 #ifdef __APPLE__
-#include <sys/types.h>
 #include <sys/sysctl.h>
 #endif
 
@@ -348,7 +348,7 @@ static void MaybePrintProgress(){
     long long V = AtomicGet64(&VisitedCount);
     if(V % 1000 == 0){
         long long F = AtomicGet64(&FoundCount);
-        long long QSize = Queue.Size;
+        long long QSize = AtomicGet64((volatile long long*)&Queue.Size);
         fprintf(stderr, "\r[Visited: %lld | Found: %lld | Queue: %lld] ", V, F, QSize);
         fflush(stderr);
     }
@@ -380,7 +380,6 @@ static void ProcessDir(const char *DirPath){
         MaybePrintProgress();
 
         if((FollowSymlinks ? stat(Full,&St) : lstat(Full,&St)) != 0) {
-            LogError(Full, strerror(errno));
             continue;
         }
 
@@ -427,7 +426,6 @@ static void ProcessDir(const char *DirPath){
     WIN32_FIND_DATAA Fd;
     HANDLE H = FindFirstFileA(Pat, &Fd);
     if(H == INVALID_HANDLE_VALUE){
-        LogError(DirPath, "Access Denied or Not Found");
         return;
     }
 
