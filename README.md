@@ -43,6 +43,10 @@ cmake ..
 cmake --build . -j4
 ```
 
+>
+> [!CAUTION]
+> MacOS cannot be builded currently due to some errors, you can fix them by your own or you can wait till the next update. This bug won't be **fixed.**
+
 ### Windows (MSVC)
 
 ```powershell
